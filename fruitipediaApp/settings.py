@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'fruitipediaApp.fruits',
+    'fruitipediaApp',
 ]
 
 MIDDLEWARE = [
@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'orm_skeleton.urls'
+ROOT_URLCONF = 'fruitipediaApp.urls'
 
 TEMPLATES = [
     {
@@ -71,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'orm_skeleton.wsgi.application'
+WSGI_APPLICATION = 'fruitipediaApp.wsgi.application'
 
 
 # Database
