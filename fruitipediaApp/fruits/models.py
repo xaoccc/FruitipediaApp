@@ -20,7 +20,7 @@ class Fruit(models.Model):
     name = models.CharField(
         null=False,
         blank=False,
-        max_length=30,
+        max_length=60,
         validators=(
             MinLengthValidator(2),
             name_consists_with_letter_only_validator,
@@ -28,6 +28,7 @@ class Fruit(models.Model):
     )
 
     image_url = models.URLField(
+        max_length=2000,
         null=False,
         blank=False,
     )
