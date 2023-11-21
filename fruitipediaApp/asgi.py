@@ -1,5 +1,5 @@
 """
-ASGI config for orm_skeleton project.
+ASGI config for fruitipediaApp project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

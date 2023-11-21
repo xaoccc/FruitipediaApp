@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'fruitipediaApp',
+    'fruitipediaApp.fruits',
 ]
 
 MIDDLEWARE = [
@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'fruitipediaApp.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "fruits_db",
+        "NAME": "fruitipedia_db",
         "USER": "postgres",
         "PASSWORD": "postgres",
         "HOST": "127.0.0.1",

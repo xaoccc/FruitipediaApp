@@ -1,5 +1,5 @@
 """
-WSGI config for orm_skeleton project.
+WSGI config for fruitipediaApp project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
