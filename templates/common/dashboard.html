@@ -3,7 +3,6 @@
 <!-- Dashboard Page -->
 {% if fruits %}
     <h2>Fruits</h2>
-
     <section id="dashboard">
         {% for fruit in fruits %}
         <div class="fruit">
@@ -19,7 +18,8 @@
             <a class="details-btn" href="{% url 'details fruit' fruit_id=fruit.pk %}">More Info</a>
         </div>
         {% endfor %}
-    </section> {% else %}
+    </section>
+{% else %}
     <h2>No fruit info yet.</h2>
 {% endif %}
 {% endblock %}
