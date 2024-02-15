@@ -1,17 +1,10 @@
 from django import forms
 
 # Here we create user forms to handle the user input
-from fruitipediaApp.fruits.models import Fruit, Category
+from fruitipediaApp.fruits.models import Fruit
 
 
-class CategoryBaseForm(forms.ModelForm):
-    class Meta:
-        model = Category
-        fields = '__all__'
 
-
-class CategoryCreateForm(CategoryBaseForm):
-    pass
 
 
 class FruitBaseForm(forms.ModelForm):
