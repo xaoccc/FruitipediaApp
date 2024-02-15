@@ -1,10 +1,6 @@
 from django.shortcuts import render, redirect
-
 from fruitipediaApp.fruits.forms import FruitCreateForm, FruitEditForm, FruitDeleteForm, CategoryCreateForm
 from fruitipediaApp.fruits.models import Fruit
-
-
-# Create your views here.
 
 
 def index(request):
