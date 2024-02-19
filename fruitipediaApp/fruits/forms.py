@@ -11,14 +11,27 @@ class FruitBaseForm(forms.ModelForm):
     class Meta:
         model = Fruit
         fields = '__all__'
+        labels = {
+            'name': '',
+            'image_url': '',
+            'description': '',
+            'nutrition': '',
+        }
 
 
 class FruitCreateForm(FruitBaseForm):
-    pass
+    class Meta(FruitBaseForm.Meta):
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Fruit Name'}),
+            'image_url': forms.TextInput(attrs={'placeholder': 'Fruit Image URL'}),
+            'description': forms.Textarea(attrs={'placeholder': 'Description'}),
+            'nutrition': forms.Textarea(attrs={'placeholder': 'Nutrition Info'}),
+        }
 
 
 class FruitEditForm(FruitBaseForm):
-    pass
+    class Meta(FruitBaseForm.Meta):
+        pass
 
 
 class FruitDeleteForm(FruitBaseForm):

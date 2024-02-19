@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView
+from django.urls import reverse
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DetailView
 
 from fruitipediaApp.fruits.forms import FruitCreateForm, FruitEditForm, FruitDeleteForm
 from fruitipediaApp.fruits.models import Fruit
@@ -18,38 +19,45 @@ def index(request):
     return render(request, 'common/index.html')
 
 
-def dashboard(request):
-    fruits = Fruit.objects.all()
+class DashboardView(ListView):
+    model = Fruit
+    template_name = 'common/dashboard.html'
+    context_object_name = 'fruits'
 
-    context = {
-        'fruits': fruits,
-    }
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["profile"] = Profile.objects.first()
+        return context
 
-    return render(request, 'common/dashboard.html', context)
+class FruitCreateView(CreateView):
+    form_class = FruitCreateForm
+    template_name = 'fruits/create-fruit.html'
+    def get_success_url(self):
+        return reverse('dashboard')
 
+    # Set the first Profile model to become the owner of the fruit, since owner is required
+    def form_valid(self, form):
+        form.instance.owner = Profile.objects.first()
+        return super().form_valid(form)
 
-
-
-def create_fruit(request):
-    if request.method == 'GET':
-        form = FruitCreateForm()
-    else:
-        form = FruitCreateForm(request.POST)
-
-        if form.is_valid():
-            form.save()
-
-            return redirect('dashboard')
-
-    context = {
-        'form': form,
-    }
-
-    return render(request, 'fruits/create-fruit.html', context)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["profile"] = Profile.objects.first()
+        return context
 
 
-def details_fruit(request, fruit_id):
-    fruit = Fruit.objects.filter(pk=fruit_id).get()
+class FruitDetailView(DetailView):
+    template_name = 'fruits/details-fruit.html'
+    model = Fruit
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["profile"] = Profile.objects.first()
+        return context
+
+
+def details_fruit(request, pk):
+    fruit = Fruit.objects.filter(pk=pk).get()
 
     context = {
         'fruit': fruit,
@@ -58,25 +66,20 @@ def details_fruit(request, fruit_id):
     return render(request, 'fruits/details-fruit.html', context)
 
 
-def edit_fruit(request, fruit_id):
-    fruit = Fruit.objects.filter(pk=fruit_id).get()
+class FruitEditView(UpdateView):
+    form_class = FruitEditForm
+    template_name = 'fruits/edit-fruit.html'
+    model = Fruit
 
-    if request.method == 'GET':
-        form = FruitEditForm(instance=fruit)
-    else:
-        form = FruitEditForm(request.POST, instance=fruit)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["profile"] = Profile.objects.first()
+        return context
 
-        if form.is_valid():
-            form.save()
+    def get_success_url(self):
+        return reverse('dashboard')
 
-            return redirect('dashboard')
 
-    context = {
-        'form': form,
-        'fruit': fruit,
-    }
-
-    return render(request, 'fruits/edit-fruit.html', context)
 
 
 def delete_fruit(request, fruit_id):
