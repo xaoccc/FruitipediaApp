@@ -1,9 +1,9 @@
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 
 from fruitipediaApp.fruits.forms import FruitCreateForm, FruitEditForm, FruitDeleteForm
 from fruitipediaApp.fruits.models import Fruit
+from fruitipediaApp.profiles.models import Profile
 
 
 class HomePageView(TemplateView):
@@ -11,7 +11,7 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['profile'] = User.objects.first()
+        context['profile'] = Profile.objects.first()
         return context
 
 def index(request):
