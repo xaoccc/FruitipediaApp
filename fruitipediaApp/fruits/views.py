@@ -1,23 +1,25 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DetailView
-
+from django.urls import reverse, reverse_lazy
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DetailView, DeleteView
 from fruitipediaApp.fruits.forms import FruitCreateForm, FruitEditForm, FruitDeleteForm
 from fruitipediaApp.fruits.models import Fruit
 from fruitipediaApp.profiles.models import Profile
 
 
-class HomePageView(TemplateView):
-    template_name = 'common/index.html'
+class ReadonlyViewMixin:
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        for field in form.fields.values():
+            field.widget.attrs["readonly"] = "readonly"
+        return form
 
-    def get_context_data(self, **kwargs):
+class GetProfileMixin:
+    def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['profile'] = Profile.objects.first()
+        context["profile"] = Profile.objects.first()
         return context
 
-def index(request):
-    return render(request, 'common/index.html')
-
+class HomePageView(GetProfileMixin, TemplateView):
+    template_name = 'common/index.html'
 
 class DashboardView(ListView):
     model = Fruit
@@ -29,7 +31,7 @@ class DashboardView(ListView):
         context["profile"] = Profile.objects.first()
         return context
 
-class FruitCreateView(CreateView):
+class FruitCreateView(GetProfileMixin, CreateView):
     form_class = FruitCreateForm
     template_name = 'fruits/create-fruit.html'
     def get_success_url(self):
@@ -40,66 +42,29 @@ class FruitCreateView(CreateView):
         form.instance.owner = Profile.objects.first()
         return super().form_valid(form)
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["profile"] = Profile.objects.first()
-        return context
 
-
-class FruitDetailView(DetailView):
+class FruitDetailView(GetProfileMixin, DetailView):
     template_name = 'fruits/details-fruit.html'
     model = Fruit
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["profile"] = Profile.objects.first()
-        return context
 
-
-def details_fruit(request, pk):
-    fruit = Fruit.objects.filter(pk=pk).get()
-
-    context = {
-        'fruit': fruit,
-    }
-
-    return render(request, 'fruits/details-fruit.html', context)
-
-
-class FruitEditView(UpdateView):
+class FruitEditView(GetProfileMixin, UpdateView):
     form_class = FruitEditForm
     template_name = 'fruits/edit-fruit.html'
     model = Fruit
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["profile"] = Profile.objects.first()
-        return context
 
     def get_success_url(self):
         return reverse('dashboard')
 
 
+class FruitDeleteView(ReadonlyViewMixin, GetProfileMixin, DeleteView):
+    model = Fruit
+    form_class = FruitDeleteForm
+    template_name = 'fruits/delete-fruit.html'
+    success_url = reverse_lazy('dashboard')
 
-
-def delete_fruit(request, fruit_id):
-    fruit = Fruit.objects.filter(pk=fruit_id).get()
-
-    if request.method == 'GET':
-        form = FruitDeleteForm(instance=fruit)
-    else:
-        form = FruitDeleteForm(request.POST, instance=fruit)
-
-        if form.is_valid():
-            fruit.delete()
-
-            return redirect('dashboard')
-
-    context = {
-        'form': form,
-        'fruit': fruit,
-    }
-
-    return render(request, 'fruits/delete-fruit.html', context)
-
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['instance'] = self.object
+        return kwargs
 

@@ -9,7 +9,7 @@ urlpatterns = (
         path('<int:pk>/', include([
             path('details/', views.FruitDetailView.as_view(), name='details fruit'),
             path('edit/', views.FruitEditView.as_view(), name='edit fruit'),
-            path('delete/', views.delete_fruit, name='delete fruit'),
+            path('delete/', views.FruitDeleteView.as_view(), name='delete fruit'),
             ])),
         ])
     ),
