@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'fruitipediaApp.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "fruitipedia_db",
+        "NAME": "fruitipedia_db_bely",
         "USER": "fruitipedia_postgres",
         "PASSWORD": "6kWq6q0oB8tlH0tqLMsh2Zi0akK8eTs4",
         "HOST": "dpg-cogd9msf7o1s73fs4jgg-a",
