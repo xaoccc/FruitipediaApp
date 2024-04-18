@@ -15,7 +15,7 @@ class ReadonlyViewMixin:
 class GetProfileMixin:
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        if Profile.objects.first():
+        if Profile.objects.all():
             context["profile"] = Profile.objects.first()
         return context
 
@@ -29,7 +29,7 @@ class DashboardView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        if Profile.objects.first():
+        if Profile.objects.all():
           context["profile"] = Profile.objects.first()
         return context
 
@@ -41,7 +41,8 @@ class FruitCreateView(GetProfileMixin, CreateView):
 
     # Set the first Profile model to become the owner of the fruit, since owner is required
     def form_valid(self, form):
-        form.instance.owner = Profile.objects.first()
+        if Profile.objects.all():
+            form.instance.owner = Profile.objects.first()
         return super().form_valid(form)
 
 
