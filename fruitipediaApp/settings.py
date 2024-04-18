@@ -84,7 +84,7 @@ DATABASES = {
         "NAME": "fruitipedia_db",
         "USER": "fruitipedia_postgres",
         "PASSWORD": "6kWq6q0oB8tlH0tqLMsh2Zi0akK8eTs4",
-        "HOST": "postgres://fruitipedia_postgres:6kWq6q0oB8tlH0tqLMsh2Zi0akK8eTs4@dpg-cogd9msf7o1s73fs4jgg-a/fruitipedia_db_bely",
+        "HOST": "fruitipedia_db_bely",
         "PORT": "5432",
     }
 }
