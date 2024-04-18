@@ -15,8 +15,8 @@ class ReadonlyViewMixin:
 class GetProfileMixin:
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        if Profile.objects.all():
-            context["profile"] = Profile.objects.first()
+        # if Profile.objects.all():
+        #     context["profile"] = Profile.objects.first()
         return context
 
 class HomePageView(GetProfileMixin, TemplateView):
@@ -29,8 +29,8 @@ class DashboardView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        if Profile.objects.all():
-          context["profile"] = Profile.objects.first()
+        # if Profile.objects.all():
+        #   context["profile"] = Profile.objects.first()
         return context
 
 class FruitCreateView(GetProfileMixin, CreateView):
