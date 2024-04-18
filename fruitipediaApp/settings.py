@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-cd%2g!p_@ut(kc8)%bd9_*@)i@kff^orkvy=!c#i!l+ak98)%0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['fruitipediaapp.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'fruitipediaapp.onrender.com']
 
 
 # Application definition
@@ -80,11 +80,17 @@ WSGI_APPLICATION = 'fruitipediaApp.wsgi.application'
 
 DATABASES = {
     "default": {
+        # "ENGINE": "django.db.backends.postgresql",
+        # "NAME": "fruitipedia_db_bely",
+        # "USER": "fruitipedia_postgres",
+        # "PASSWORD": "6kWq6q0oB8tlH0tqLMsh2Zi0akK8eTs4",
+        # "HOST": "dpg-cogd9msf7o1s73fs4jgg-a",
+        # "PORT": "5432",
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "fruitipedia_db_bely",
-        "USER": "fruitipedia_postgres",
-        "PASSWORD": "6kWq6q0oB8tlH0tqLMsh2Zi0akK8eTs4",
-        "HOST": "dpg-cogd9msf7o1s73fs4jgg-a",
+        "NAME": "fruitipedia_db",
+        "USER": "postgres",
+        "PASSWORD": "postgres",
+        "HOST": "127.0.0.1",
         "PORT": "5432",
     }
 }
