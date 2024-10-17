@@ -59,10 +59,16 @@ WSGI_APPLICATION = 'fruitipediaApp.wsgi.application'
 
 DATABASES = {
     "default":
-        dj_database_url.config(
-            default=os.environ.get('FRUITIPEDIA_DB'),
-            conn_max_age=600
-        )
+        # dj_database_url.config(
+        #     default=os.environ.get('FRUITIPEDIA_DB'),
+        #     conn_max_age=600
+        # )
+        {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3'
+        }
+
+
         # {
         #     "ENGINE": "django.db.backends.postgresql",
         #     "NAME": "fruitipedia_db",
